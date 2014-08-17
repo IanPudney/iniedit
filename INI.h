@@ -33,14 +33,14 @@ public:
 	/**
 	Constructs an INI object representing the configuration located at filename.
 	**/
-	INI(string filename);
+	INI(const string& filename);
 
 	/**
 	Opens the file located at filename, and loads it into memory. If a file is
 	already open, that file is closed (and written out). If filename does not
 	exist, it is created.
 	**/
-	bool open(string filename);
+	bool open(const string& filename);
 
 	/**
 	Checks whether a file is currently open and loaded into memory.
@@ -66,21 +66,21 @@ public:
 	Returns a reference to the property named propertyName in section section.
 	Creates the property if it does not exist.
 	**/
-	string& property(string section, string propertyName);
+	string& property(const string& section, const string& propertyName);
 
 	/**
 	DEPRECATED: use property() or operator[] instead.
 	returns the property located in section section with name property. Creates
 	it if it does not exist.
 	**/
-	string getProperty(string section, string property);
+	string getProperty(const string& section, const string& property);
 
 	/**
 	DEPRECATED: use property() or operator[] instead.
 	Sets the property named property in section section to value value. Creates
 	it if it does not exist.
 	**/
-	void setProperty(string section, string property, string value);
+	void setProperty(const string& section, const string& property, const string& value);
 
 	/**
 	Returns a reference to the section section, and creates it if it does not
@@ -88,7 +88,7 @@ public:
 	Example: myIniFile["mySection"]["myProperty"] = myValue;
 	Example: myValue = myIniFile["mySection"]["myProperty"];
 	**/
-	Section& operator[](string section);
+	Section& operator[](const string& section);
 
 	/**
 	Destructor. Deletes the object, and saves changes. If you do not want
@@ -102,12 +102,12 @@ public:
 INI::INI()
 : o(false)
 {}
-INI::INI(string filename)
+INI::INI(const string& filename)
 : o(false)
 {
 	open(filename);
 }
-bool INI::open(string filename)
+bool INI::open(const string& filename)
 {
 	if(o)
 	{
@@ -157,11 +157,11 @@ void INI::abort()
 	configData.clear();
 	o=0;
 }
-string INI::getProperty(string section, string propertyName)
+string INI::getProperty(const string& section, const string& propertyName)
 {
 	return configData[section][propertyName];
 }
-void INI::setProperty(string section, string propertyName,string value)
+void INI::setProperty(const string& section,const string& propertyName,const string& value)
 {
 	configData[section][propertyName]=value;
 }
@@ -188,11 +188,11 @@ bool INI::save()
 		return false;
 	}
 }
-string& INI::property(string section, string propertyName)
+string& INI::property(const string& section, const string& propertyName)
 {
 	return configData[section][propertyName];
 }
-INI::Section& INI::operator[](string section)
+INI::Section& INI::operator[](const string& section)
 {
 	return configData[section];
 }
